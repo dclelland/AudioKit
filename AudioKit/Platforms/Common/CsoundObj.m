@@ -375,6 +375,11 @@ static void messageCallback(CSOUND *cs, int attr, const char *format, va_list va
     return _cs;
 }
 
+- (AudioUnit *)getAudioUnit
+{
+    return _csAUHAL;
+}
+
 - (MYFLT *)getInputChannelPtr:(NSString *)channelName
                   channelType:(AKControlChannelType)channelType
 {
@@ -990,10 +995,15 @@ static void AKBreakpoint(CSOUND *cs, debug_bkpt_info_t *bkpt, void *userdata)
         BOOL success;
 
         AVAudioSession *session = [AVAudioSession sharedInstance];
+        AVAudioSessionCategoryOptions options;
 #if TARGET_OS_TV
-        AVAudioSessionCategoryOptions options = AVAudioSessionCategoryOptionMixWithOthers;
+        options = AVAudioSessionCategoryOptionMixWithOthers;
 #else
-        AVAudioSessionCategoryOptions options = AVAudioSessionCategoryOptionMixWithOthers | AVAudioSessionCategoryOptionDefaultToSpeaker;
+        if (AKSettings.shared.defaultToSpeaker) {
+            options = AVAudioSessionCategoryOptionMixWithOthers | AVAudioSessionCategoryOptionDefaultToSpeaker;
+        } else {
+            options = AVAudioSessionCategoryOptionMixWithOthers;
+        }
 #endif
         
         if (AKSettings.shared.audioInputEnabled) {
