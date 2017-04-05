@@ -23,8 +23,8 @@
 }
 
 - (instancetype)initWithInput:(AKFSignal *)sourceSignal
-                 scalingRatio:(AKControl *)scalingRatio
-                        shift:(AKControl *)shift
+                 scalingRatio:(AKParameter *)scalingRatio
+                        shift:(AKParameter *)shift
 {
     self = [super initWithString:[self operationName]];
     if (self) {
