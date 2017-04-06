@@ -14,8 +14,8 @@
 @implementation AKWarpedFFT
 {
     AKFSignal *fsigin;
-    AKControl *kscal;
-    AKControl *kshift;
+    AKParameter *kscal;
+    AKParameter *kshift;
     AKControl *klowest;
     AKControl *kmeth;
     AKControl *kgain;
